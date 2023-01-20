@@ -1,8 +1,8 @@
 use crate::errors::ErrorCode;
 use anchor_lang::prelude::*;
-use std::slice::Iter;
+use std::{slice::Iter, str::FromStr};
 
-pub const GLOBAL_AUTHORITY: &str = "";
+pub const GLOBAL_AUTHORITY: &str = "gmdS6fDgVbeCCYwwvTPJRKM9bFbAgSZh6MTDUT2DcgV";
 pub const STORAGE_ENTRY_SEED_PREFIX: &str = "storage-entry";
 pub const STORAGE_ENTRY_SIZE: usize = 8 + std::mem::size_of::<StorageEntry>() + 16;
 
@@ -15,6 +15,9 @@ pub struct StorageEntry {
 }
 
 pub fn assert_authority<'info>(key: &String, authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
+    if authority == Pubkey::from_str(GLOBAL_AUTHORITY).unwrap() {
+        return Ok(());
+    }
     if key.starts_with("s:") {
         let stake_pool_account_info_unsafe = next_account_info(remaining_accounts);
         if stake_pool_account_info_unsafe.is_err() {
