@@ -10,7 +10,7 @@ declare_id!("cosTRGbPdRwuyAnWXQ8H7rNXZNXvsQ3nbvzGd9BdvoT");
 pub mod cardinal_onchain_storage {
     use super::*;
 
-    pub fn init_storage_entry(ctx: Context<InitStorageEntryCtx>, ix: InitStorageEntryIx) -> Result<()> {
+    pub fn init_storage_entry<'key, 'accounts, 'remaining, 'info>(ctx: Context<'key, 'accounts, 'remaining, 'info, InitStorageEntryCtx<'info>>, ix: InitStorageEntryIx) -> Result<()> {
         init_storage_entry::handler(ctx, ix)
     }
 

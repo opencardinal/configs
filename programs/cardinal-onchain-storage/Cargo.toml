@@ -1,6 +1,6 @@
 [package]
 name = "cardinal-onchain-storage"
-version = "1.2.0"
+version = "1.0.0"
 description = "Cardinal Onchain Storage"
 edition = "2021"
 homepage = "https://cardinal.so"
@@ -20,5 +20,7 @@ cpi = ["no-entrypoint"]
 default = []
 
 [dependencies]
+solana-program = "1.10.41"
 anchor-lang = { version = "0.25.0" }
-anchor-spl = "0.25.0"
+cardinal-rewards-center = { version = "^2.3.0" }
+cardinal-stake-pool = { version = "^1.17.0" }

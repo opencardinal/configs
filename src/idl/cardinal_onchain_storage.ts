@@ -1,5 +1,5 @@
 export type CardinalOnchainStorage = {
-  "version": "1.2.0",
+  "version": "1.0.0",
   "name": "cardinal_onchain_storage",
   "instructions": [
     {
@@ -35,7 +35,7 @@ export type CardinalOnchainStorage = {
       "accounts": [
         {
           "name": "storageEntry",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -65,16 +65,12 @@ export type CardinalOnchainStorage = {
             "type": "u8"
           },
           {
-            "name": "name",
+            "name": "key",
             "type": "string"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -93,7 +89,7 @@ export type CardinalOnchainStorage = {
         "kind": "struct",
         "fields": [
           {
-            "name": "name",
+            "name": "key",
             "type": "string"
           },
           {
@@ -129,12 +125,17 @@ export type CardinalOnchainStorage = {
       "code": 6000,
       "name": "InvalidAuthority",
       "msg": "Invalid authority"
+    },
+    {
+      "code": 6001,
+      "name": "MissingRemainingAccountsForStorageEntry",
+      "msg": "Missing remaining accounts for storage entry"
     }
   ]
 };
 
 export const IDL: CardinalOnchainStorage = {
-  "version": "1.2.0",
+  "version": "1.0.0",
   "name": "cardinal_onchain_storage",
   "instructions": [
     {
@@ -170,7 +171,7 @@ export const IDL: CardinalOnchainStorage = {
       "accounts": [
         {
           "name": "storageEntry",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -200,16 +201,12 @@ export const IDL: CardinalOnchainStorage = {
             "type": "u8"
           },
           {
-            "name": "name",
+            "name": "key",
             "type": "string"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -228,7 +225,7 @@ export const IDL: CardinalOnchainStorage = {
         "kind": "struct",
         "fields": [
           {
-            "name": "name",
+            "name": "key",
             "type": "string"
           },
           {
@@ -264,6 +261,11 @@ export const IDL: CardinalOnchainStorage = {
       "code": 6000,
       "name": "InvalidAuthority",
       "msg": "Invalid authority"
+    },
+    {
+      "code": 6001,
+      "name": "MissingRemainingAccountsForStorageEntry",
+      "msg": "Missing remaining accounts for storage entry"
     }
   ]
 };

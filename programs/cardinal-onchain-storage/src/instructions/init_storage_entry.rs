@@ -2,7 +2,7 @@ use {crate::state::*, anchor_lang::prelude::*};
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct InitStorageEntryIx {
-    name: String,
+    key: String,
     extends: Vec<Pubkey>,
 }
 
@@ -13,7 +13,7 @@ pub struct InitStorageEntryCtx<'info> {
         init,
         payer = authority,
         space = STORAGE_ENTRY_SIZE,
-        seeds = [STORAGE_ENTRY_SEED_PREFIX.as_bytes(), ix.name.as_bytes()],
+        seeds = [STORAGE_ENTRY_SEED_PREFIX.as_bytes(), ix.key.as_bytes()],
         bump
     )]
     storage_entry: Account<'info, StorageEntry>,
@@ -23,11 +23,12 @@ pub struct InitStorageEntryCtx<'info> {
     system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<InitStorageEntryCtx>, ix: InitStorageEntryIx) -> Result<()> {
+pub fn handler<'key, 'accounts, 'remaining, 'info>(ctx: Context<'key, 'accounts, 'remaining, 'info, InitStorageEntryCtx<'info>>, ix: InitStorageEntryIx) -> Result<()> {
+    assert_authority(&ix.key, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+
     let storage_entry = &mut ctx.accounts.storage_entry;
     storage_entry.bump = *ctx.bumps.get("storage_entry").unwrap();
-    storage_entry.name = ix.name;
-    storage_entry.authority = ctx.accounts.authority.key();
+    storage_entry.key = ix.key;
     storage_entry.extends = ix.extends;
 
     Ok(())

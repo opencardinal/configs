@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.0.0",
   "name": "cardinal_onchain_storage",
   "instructions": [
     {
@@ -35,7 +35,7 @@
       "accounts": [
         {
           "name": "storageEntry",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -65,16 +65,12 @@
             "type": "u8"
           },
           {
-            "name": "name",
+            "name": "key",
             "type": "string"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -93,7 +89,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "name",
+            "name": "key",
             "type": "string"
           },
           {
@@ -129,6 +125,11 @@
       "code": 6000,
       "name": "InvalidAuthority",
       "msg": "Invalid authority"
+    },
+    {
+      "code": 6001,
+      "name": "MissingRemainingAccountsForStorageEntry",
+      "msg": "Missing remaining accounts for storage entry"
     }
   ]
 }

@@ -1,7 +1,4 @@
-use {
-    crate::{errors::ErrorCode, state::*},
-    anchor_lang::prelude::*,
-};
+use {crate::state::*, anchor_lang::prelude::*};
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct UpdateStorageEntryIx {
@@ -12,7 +9,7 @@ pub struct UpdateStorageEntryIx {
 #[derive(Accounts)]
 #[instruction(ix: UpdateStorageEntryIx)]
 pub struct UpdateStorageEntryCtx<'info> {
-    #[account(mut, constraint = storage_entry.authority == authority.key() @ ErrorCode::InvalidAuthority)]
+    // #[account(mut, constraint = storage_entry.authority == authority.key() @ ErrorCode::InvalidAuthority)]
     storage_entry: Account<'info, StorageEntry>,
 
     #[account(mut)]
@@ -20,6 +17,8 @@ pub struct UpdateStorageEntryCtx<'info> {
 }
 
 pub fn handler(ctx: Context<UpdateStorageEntryCtx>, ix: UpdateStorageEntryIx) -> Result<()> {
+    assert_authority(&ctx.accounts.storage_entry.key, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+
     let storage_entry = &mut ctx.accounts.storage_entry;
     storage_entry.value = ix.value;
     storage_entry.extends = ix.extends;
