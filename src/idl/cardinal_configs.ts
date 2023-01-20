@@ -1,12 +1,12 @@
-export type CardinalOnchainStorage = {
+export type CardinalConfigs = {
   "version": "1.0.0",
-  "name": "cardinal_onchain_storage",
+  "name": "cardinal_configs",
   "instructions": [
     {
-      "name": "initStorageEntry",
+      "name": "initConfigEntry",
       "accounts": [
         {
-          "name": "storageEntry",
+          "name": "configEntry",
           "isMut": true,
           "isSigner": false
         },
@@ -25,16 +25,16 @@ export type CardinalOnchainStorage = {
         {
           "name": "ix",
           "type": {
-            "defined": "InitStorageEntryIx"
+            "defined": "InitConfigEntryIx"
           }
         }
       ]
     },
     {
-      "name": "updateStorageEntry",
+      "name": "updateConfigEntry",
       "accounts": [
         {
-          "name": "storageEntry",
+          "name": "configEntry",
           "isMut": false,
           "isSigner": false
         },
@@ -48,7 +48,7 @@ export type CardinalOnchainStorage = {
         {
           "name": "ix",
           "type": {
-            "defined": "UpdateStorageEntryIx"
+            "defined": "UpdateConfigEntryIx"
           }
         }
       ]
@@ -56,7 +56,7 @@ export type CardinalOnchainStorage = {
   ],
   "accounts": [
     {
-      "name": "storageEntry",
+      "name": "configEntry",
       "type": {
         "kind": "struct",
         "fields": [
@@ -84,7 +84,7 @@ export type CardinalOnchainStorage = {
   ],
   "types": [
     {
-      "name": "InitStorageEntryIx",
+      "name": "InitConfigEntryIx",
       "type": {
         "kind": "struct",
         "fields": [
@@ -102,7 +102,7 @@ export type CardinalOnchainStorage = {
       }
     },
     {
-      "name": "UpdateStorageEntryIx",
+      "name": "UpdateConfigEntryIx",
       "type": {
         "kind": "struct",
         "fields": [
@@ -128,21 +128,36 @@ export type CardinalOnchainStorage = {
     },
     {
       "code": 6001,
-      "name": "MissingRemainingAccountsForStorageEntry",
-      "msg": "Missing remaining accounts for storage entry"
+      "name": "MissingRemainingAccountsForConfigEntry",
+      "msg": "Missing remaining accounts for config entry"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidStakePoolAccount",
+      "msg": "Invalid stake pool account"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidRewardCenterPoolAccount",
+      "msg": "Invalid reward center pool account"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidPoolAuthority",
+      "msg": "Invalid pool authority"
     }
   ]
 };
 
-export const IDL: CardinalOnchainStorage = {
+export const IDL: CardinalConfigs = {
   "version": "1.0.0",
-  "name": "cardinal_onchain_storage",
+  "name": "cardinal_configs",
   "instructions": [
     {
-      "name": "initStorageEntry",
+      "name": "initConfigEntry",
       "accounts": [
         {
-          "name": "storageEntry",
+          "name": "configEntry",
           "isMut": true,
           "isSigner": false
         },
@@ -161,16 +176,16 @@ export const IDL: CardinalOnchainStorage = {
         {
           "name": "ix",
           "type": {
-            "defined": "InitStorageEntryIx"
+            "defined": "InitConfigEntryIx"
           }
         }
       ]
     },
     {
-      "name": "updateStorageEntry",
+      "name": "updateConfigEntry",
       "accounts": [
         {
-          "name": "storageEntry",
+          "name": "configEntry",
           "isMut": false,
           "isSigner": false
         },
@@ -184,7 +199,7 @@ export const IDL: CardinalOnchainStorage = {
         {
           "name": "ix",
           "type": {
-            "defined": "UpdateStorageEntryIx"
+            "defined": "UpdateConfigEntryIx"
           }
         }
       ]
@@ -192,7 +207,7 @@ export const IDL: CardinalOnchainStorage = {
   ],
   "accounts": [
     {
-      "name": "storageEntry",
+      "name": "configEntry",
       "type": {
         "kind": "struct",
         "fields": [
@@ -220,7 +235,7 @@ export const IDL: CardinalOnchainStorage = {
   ],
   "types": [
     {
-      "name": "InitStorageEntryIx",
+      "name": "InitConfigEntryIx",
       "type": {
         "kind": "struct",
         "fields": [
@@ -238,7 +253,7 @@ export const IDL: CardinalOnchainStorage = {
       }
     },
     {
-      "name": "UpdateStorageEntryIx",
+      "name": "UpdateConfigEntryIx",
       "type": {
         "kind": "struct",
         "fields": [
@@ -264,8 +279,23 @@ export const IDL: CardinalOnchainStorage = {
     },
     {
       "code": 6001,
-      "name": "MissingRemainingAccountsForStorageEntry",
-      "msg": "Missing remaining accounts for storage entry"
+      "name": "MissingRemainingAccountsForConfigEntry",
+      "msg": "Missing remaining accounts for config entry"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidStakePoolAccount",
+      "msg": "Invalid stake pool account"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidRewardCenterPoolAccount",
+      "msg": "Invalid reward center pool account"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidPoolAuthority",
+      "msg": "Invalid pool authority"
     }
   ]
 };

@@ -118,7 +118,7 @@ jobs:
       - name: build
         run: cargo build-bpf
       - name: Run tests
-        run: solana-test-validator --url https://api.devnet.solana.com --bpf-program stQo8YUfVZG49VJ3Ewt9mzZBG3KFk9EkrBKJugc2d6J ./target/deploy/cardinal_onchain_storage.so --reset & echo $$! > validator.PID
+        run: solana-test-validator --url https://api.devnet.solana.com --bpf-program stQo8YUfVZG49VJ3Ewt9mzZBG3KFk9EkrBKJugc2d6J ./target/deploy/cardinal_configs.so --reset & echo $$! > validator.PID
       - run: sleep 6
       - run: yarn test
 

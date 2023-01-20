@@ -6,32 +6,31 @@ import { AnchorProvider } from "@project-serum/anchor/dist/cjs/provider";
 import type { ConfirmOptions, Connection } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
-import * as ONCHAIN_STORAGE_TYPES from "../idl/cardinal_onchain_storage";
+import * as CONFIGS_TYPES from "../idl/cardinal_configs";
 
-export const ONCHAIN_STORAGE_ADDRESS = new PublicKey(
+export const configs_ADDRESS = new PublicKey(
   "cosTRGbPdRwuyAnWXQ8H7rNXZNXvsQ3nbvzGd9BdvoT"
 );
 
-export const STORAGE_ENTRY_SEED = "storage-entry";
+export const CONFIG_ENTRY_SEED = "config-entry";
 
-export type ONCHAIN_STORAGE_PROGRAM =
-  ONCHAIN_STORAGE_TYPES.CardinalOnchainStorage;
+export type CONFIGS_PROGRAM = CONFIGS_TYPES.CardinalConfigs;
 
-export const ONCHAIN_STORAGE_IDL = ONCHAIN_STORAGE_TYPES.IDL;
+export const CONFIGS_IDL = CONFIGS_TYPES.IDL;
 
 export type StorageEntryData = ParsedIdlAccountData<
-  "storageEntry",
-  ONCHAIN_STORAGE_PROGRAM
+  "configEntry",
+  CONFIGS_PROGRAM
 >;
 
-export const onchainStorageProgram = (
+export const configsProgram = (
   connection: Connection,
   wallet?: Wallet,
   confirmOptions?: ConfirmOptions
 ) => {
-  return new Program<ONCHAIN_STORAGE_PROGRAM>(
-    ONCHAIN_STORAGE_IDL,
-    ONCHAIN_STORAGE_ADDRESS,
+  return new Program<CONFIGS_PROGRAM>(
+    CONFIGS_IDL,
+    configs_ADDRESS,
     new AnchorProvider(
       connection,
       wallet ?? emptyWallet(PublicKey.default),

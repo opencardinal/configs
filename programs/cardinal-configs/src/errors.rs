@@ -4,8 +4,8 @@ use anchor_lang::prelude::*;
 pub enum ErrorCode {
     #[msg("Invalid authority")]
     InvalidAuthority,
-    #[msg("Missing remaining accounts for storage entry")]
-    MissingRemainingAccountsForStorageEntry,
+    #[msg("Missing remaining accounts for config entry")]
+    MissingRemainingAccountsForConfigEntry,
     #[msg("Invalid stake pool account")]
     InvalidStakePoolAccount,
     #[msg("Invalid reward center pool account")]

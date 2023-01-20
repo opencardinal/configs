@@ -1,12 +1,12 @@
 {
   "version": "1.0.0",
-  "name": "cardinal_onchain_storage",
+  "name": "cardinal_configs",
   "instructions": [
     {
-      "name": "initStorageEntry",
+      "name": "initConfigEntry",
       "accounts": [
         {
-          "name": "storageEntry",
+          "name": "configEntry",
           "isMut": true,
           "isSigner": false
         },
@@ -25,16 +25,16 @@
         {
           "name": "ix",
           "type": {
-            "defined": "InitStorageEntryIx"
+            "defined": "InitConfigEntryIx"
           }
         }
       ]
     },
     {
-      "name": "updateStorageEntry",
+      "name": "updateConfigEntry",
       "accounts": [
         {
-          "name": "storageEntry",
+          "name": "configEntry",
           "isMut": false,
           "isSigner": false
         },
@@ -48,7 +48,7 @@
         {
           "name": "ix",
           "type": {
-            "defined": "UpdateStorageEntryIx"
+            "defined": "UpdateConfigEntryIx"
           }
         }
       ]
@@ -56,7 +56,7 @@
   ],
   "accounts": [
     {
-      "name": "StorageEntry",
+      "name": "ConfigEntry",
       "type": {
         "kind": "struct",
         "fields": [
@@ -84,7 +84,7 @@
   ],
   "types": [
     {
-      "name": "InitStorageEntryIx",
+      "name": "InitConfigEntryIx",
       "type": {
         "kind": "struct",
         "fields": [
@@ -102,7 +102,7 @@
       }
     },
     {
-      "name": "UpdateStorageEntryIx",
+      "name": "UpdateConfigEntryIx",
       "type": {
         "kind": "struct",
         "fields": [
@@ -128,8 +128,23 @@
     },
     {
       "code": 6001,
-      "name": "MissingRemainingAccountsForStorageEntry",
-      "msg": "Missing remaining accounts for storage entry"
+      "name": "MissingRemainingAccountsForConfigEntry",
+      "msg": "Missing remaining accounts for config entry"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidStakePoolAccount",
+      "msg": "Invalid stake pool account"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidRewardCenterPoolAccount",
+      "msg": "Invalid reward center pool account"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidPoolAuthority",
+      "msg": "Invalid pool authority"
     }
   ]
 }

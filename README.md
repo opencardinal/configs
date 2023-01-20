@@ -1,4 +1,4 @@
-# Cardinal Onchain Storage
+# Cardinal Configs
 
 [![License](https://img.shields.io/badge/license-AGPL%203.0-blue)](https://github.com/cardinal-labs/cardinal-staking/blob/master/LICENSE)
 [![Release](https://github.com/cardinal-labs/cardinal-staking/actions/workflows/release.yml/badge.svg?branch=v0.0.27)](https://github.com/cardinal-labs/cardinal-staking/actions/workflows/release.yml)
@@ -13,13 +13,13 @@
 
 ## Background
 
-Cardinal onchain storage is a simple key-value store on-chain with pipelines deployed as serverless cron-jobs for updating those key-value pairs with more expensive query results.
+Cardinal configs is a simple key-value store on-chain with pipelines deployed as serverless cron-jobs for updating those key-value pairs with more expensive query results.
 
 ## Packages
 
 | Package          | Description                               | Version                                                                                                 | Docs                                                                                   |
 | :--------------- | :---------------------------------------- | :------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------- |
-| `cardinal-onchain-storage` | On-chain statistics for cardinal programs | [![Crates.io](https://img.shields.io/crates/v/cardinal-onchain-storage)](https://crates.io/crates/cardinal-onchain-storage) | [![Docs.rs](https://docs.rs/cardinal-onchain-storage/badge.svg)](https://docs.rs/cardinal-onchain-storage) |
+| `cardinal-configs` | On-chain statistics for cardinal programs | [![Crates.io](https://img.shields.io/crates/v/cardinal-configs)](https://crates.io/crates/cardinal-configs) | [![Docs.rs](https://docs.rs/cardinal-configs/badge.svg)](https://docs.rs/cardinal-configs) |
 
 ## Questions & Support
 

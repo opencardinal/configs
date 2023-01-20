@@ -2,9 +2,9 @@ import { executeTransaction } from "@cardinal/common";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 
 import {
-  findStorageEntryId,
-  getStorageEntry,
-  onchainStorageProgram,
+  configsProgram,
+  findConfigEntryId,
+  getConfigEntry,
 } from "../src/programs";
 import type { CardinalProvider } from "./workspace";
 import { getProvider } from "./workspace";
@@ -15,17 +15,17 @@ describe("Create storage entry", () => {
 
   it("Init storage entry", async () => {
     provider = await getProvider();
-    const program = onchainStorageProgram(provider.connection);
+    const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
-    const storageEntryId = findStorageEntryId(storageEntryName);
+    const storageEntryId = findConfigEntryId(storageEntryName);
     const ix = await program.methods
-      .initStorageEntry({
-        name: storageEntryName,
+      .initConfigEntry({
+        key: storageEntryName,
         extends: [],
       })
-      .accounts({
-        storageEntry: storageEntryId,
+      .accountsStrict({
+        configEntry: storageEntryId,
         authority: provider.wallet.publicKey,
         systemProgram: SystemProgram.programId,
       })
@@ -34,28 +34,25 @@ describe("Create storage entry", () => {
 
     await executeTransaction(provider.connection, transaction, provider.wallet);
 
-    const storageEntryData = await getStorageEntry(
+    const storageEntryData = await getConfigEntry(
       provider.connection,
       storageEntryName
     );
 
-    expect(storageEntryData.parsed.name).toEqual(storageEntryName);
-    expect(storageEntryData.parsed.authority.toString()).toEqual(
-      provider.wallet.publicKey.toString()
-    );
+    expect(storageEntryData.parsed.key).toEqual(storageEntryName);
   });
 
   it("Update storage entry", async () => {
-    const program = onchainStorageProgram(provider.connection);
+    const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
     const ix = await program.methods
-      .updateStorageEntry({
+      .updateConfigEntry({
         value: "150",
         extends: [],
       })
-      .accounts({
-        storageEntry: PublicKey.default,
+      .accountsStrict({
+        configEntry: PublicKey.default,
         authority: PublicKey.default,
       })
       .instruction();
@@ -63,15 +60,12 @@ describe("Create storage entry", () => {
 
     await executeTransaction(provider.connection, transaction, provider.wallet);
 
-    const storageEntryData = await getStorageEntry(
+    const storageEntryData = await getConfigEntry(
       provider.connection,
       storageEntryName
     );
 
-    expect(storageEntryData.parsed.name).toEqual(storageEntryName);
+    expect(storageEntryData.parsed.key).toEqual(storageEntryName);
     expect(storageEntryData.parsed.value).toEqual("150");
-    expect(storageEntryData.parsed.authority.toString()).toEqual(
-      provider.wallet.publicKey.toString()
-    );
   });
 });

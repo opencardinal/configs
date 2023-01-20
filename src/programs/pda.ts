@@ -2,18 +2,15 @@ import type { web3 } from "@project-serum/anchor";
 import { utils } from "@project-serum/anchor";
 import { findProgramAddressSync } from "@project-serum/anchor/dist/cjs/utils/pubkey";
 
-import { ONCHAIN_STORAGE_ADDRESS, STORAGE_ENTRY_SEED } from "./constants";
+import { CONFIG_ENTRY_SEED, configs_ADDRESS } from "./constants";
 
 /**
- * Finds the storage entry id.
+ * Finds the config entry id.
  * @returns
  */
-export const findStorageEntryId = (name: string): web3.PublicKey => {
+export const findConfigEntryId = (name: string): web3.PublicKey => {
   return findProgramAddressSync(
-    [
-      utils.bytes.utf8.encode(STORAGE_ENTRY_SEED),
-      utils.bytes.utf8.encode(name),
-    ],
-    ONCHAIN_STORAGE_ADDRESS
+    [utils.bytes.utf8.encode(CONFIG_ENTRY_SEED), utils.bytes.utf8.encode(name)],
+    configs_ADDRESS
   )[0];
 };

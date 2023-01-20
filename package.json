@@ -1,20 +1,19 @@
 {
-  "name": "@cardinal/onchain-storage",
-  "version": "1.2.0",
-  "description": "Cardinal onchain storage SDK",
+  "name": "@cardinal/configs",
+  "version": "1.0.0",
+  "description": "Cardinal configs SDK",
   "keywords": [
     "solana",
     "anchor",
     "cardinal",
-    "onchain",
-    "storage"
+    "configs"
   ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "repository": "git@github.com:cardinal-labs/cardinal-onchain-storage.git",
+  "repository": "git@github.com:cardinal-labs/cardinal-configs.git",
   "author": "Giannis Chatziveroglou <giannis@cardinal.so>",
   "bugs": {
-    "url": "https://github.com/cardinal-labs/cardinal-onchain-storage/issues",
+    "url": "https://github.com/cardinal-labs/cardinal-configs/issues",
     "email": "info@cardinal.so"
   },
   "homepage": "https://cardinal.so",
