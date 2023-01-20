@@ -1,0 +1,24 @@
+[package]
+name = "cardinal-onchain-storage"
+version = "1.2.0"
+description = "Cardinal Onchain Storage"
+edition = "2021"
+homepage = "https://cardinal.so"
+repository = "https://github.com/cardinal-labs/cardinal-onchain-storage/"
+authors = ["Giannis Chatziveroglou <giannis@cardinal.so>"]
+license = "AGPL-3.0"
+keywords = ["solana", "cardinal", "onchain", "storage"]
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "cardinal_onchain_storage"
+
+[features]
+no-entrypoint = []
+no-idl = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = { version = "0.25.0" }
+anchor-spl = "0.25.0"

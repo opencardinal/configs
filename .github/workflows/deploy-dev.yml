@@ -1,0 +1,56 @@
+name: Deploy dev
+
+on:
+  workflow_dispatch: {}
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_TOOLCHAIN: nightly
+  NPM_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+  SOLANA_VERSION: 1.13.5
+  ANCHOR_GIT: https://github.com/project-serum/anchor
+  ANCHOR_VERSION: 0.25.0
+  CLUSTER: devnet
+  DEPLOYER_KEYPAIR: ${{ secrets.DEPLOYER_KEYPAIR }}
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    name: Deploy to devnet buffer
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/install-linux-build-deps
+      - uses: actions-rs/toolchain@v1
+        with:
+          override: true
+          profile: minimal
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+      - uses: ./.github/actions/install-solana
+        with:
+          solana_version: ${{ env.SOLANA_VERSION }}
+      - uses: ./.github/actions/install-anchor
+        with:
+          anchor_git: ${{ env.ANCHOR_GIT }}
+          anchor_version: ${{ env.ANCHOR_VERSION }}
+      - name: Solana buffer deploy
+        uses: cardinal-labs/solana-buffer-deploy-action@v0.1.5
+        id: buffer-deploy
+        with:
+          network: https://api.devnet.solana.com
+          program: cardinal_onchain_storage
+          keypair: ${{ env.DEPLOYER_KEYPAIR }}
+          program-id: stQo8YUfVZG49VJ3Ewt9mzZBG3KFk9EkrBKJugc2d6J
+          buffer-authority: cteamyte8zjZTeexp3qTzvpb24TKRSL3HFad9SzNaNJ
+      - name: Squads program upgrade
+        uses: cardinal-labs/squads-program-upgrade@v0.1.4
+        id: squads-proposal
+        with:
+          program-multisig: sd4UxSuDinnX2Ldz2VUryQo7iox2HJxynrpChcmGqLU
+          program-id: stQo8YUfVZG49VJ3Ewt9mzZBG3KFk9EkrBKJugc2d6J
+          program-index: 2
+          buffer: ${{ steps.buffer-deploy.outputs.buffer }}
+          spill-address: cdepe4q2yAqYVycTvzHZ67dhzH5sbSNAzaMJsbzuT4A
+          authority: cteamyte8zjZTeexp3qTzvpb24TKRSL3HFad9SzNaNJ
+          name: deploy-onchain-storage-${{ github.ref_name }}
+          keypair: ${{ env.DEPLOYER_KEYPAIR }}
+          network-url: https://api.devnet.solana.com
