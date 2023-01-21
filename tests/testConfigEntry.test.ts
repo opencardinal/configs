@@ -22,6 +22,7 @@ describe("Create storage entry", () => {
     const ix = await program.methods
       .initConfigEntry({
         key: storageEntryName,
+        value: "value",
         extends: [],
       })
       .accountsStrict({
@@ -40,6 +41,7 @@ describe("Create storage entry", () => {
     );
 
     expect(storageEntryData.parsed.key).toEqual(storageEntryName);
+    expect(storageEntryData.parsed.value).toEqual("value");
   });
 
   it("Update storage entry", async () => {
@@ -54,6 +56,7 @@ describe("Create storage entry", () => {
       .accountsStrict({
         configEntry: PublicKey.default,
         authority: PublicKey.default,
+        systemProgram: SystemProgram.programId,
       })
       .instruction();
     transaction.instructions.push(ix);
