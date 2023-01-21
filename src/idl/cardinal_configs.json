@@ -42,6 +42,11 @@
           "name": "authority",
           "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -90,6 +95,10 @@
         "fields": [
           {
             "name": "key",
+            "type": "string"
+          },
+          {
+            "name": "value",
             "type": "string"
           },
           {

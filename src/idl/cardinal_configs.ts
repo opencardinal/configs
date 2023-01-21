@@ -42,6 +42,11 @@ export type CardinalConfigs = {
           "name": "authority",
           "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -90,6 +95,10 @@ export type CardinalConfigs = {
         "fields": [
           {
             "name": "key",
+            "type": "string"
+          },
+          {
+            "name": "value",
             "type": "string"
           },
           {
@@ -193,6 +202,11 @@ export const IDL: CardinalConfigs = {
           "name": "authority",
           "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -241,6 +255,10 @@ export const IDL: CardinalConfigs = {
         "fields": [
           {
             "name": "key",
+            "type": "string"
+          },
+          {
+            "name": "value",
             "type": "string"
           },
           {
