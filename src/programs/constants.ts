@@ -9,7 +9,7 @@ import { PublicKey } from "@solana/web3.js";
 import * as CONFIGS_TYPES from "../idl/cardinal_configs";
 
 export const CONFIGS_ADDRESS = new PublicKey(
-  "cosTRGbPdRwuyAnWXQ8H7rNXZNXvsQ3nbvzGd9BdvoT"
+  "cnf9Q2MmjDVbzX1kjr8tEEtPJyB4e1avEuBMzWygnWo"
 );
 
 export const CONFIG_ENTRY_SEED = "config-entry";
