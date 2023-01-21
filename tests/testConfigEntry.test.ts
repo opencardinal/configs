@@ -9,24 +9,24 @@ import {
 import type { CardinalProvider } from "./workspace";
 import { getProvider } from "./workspace";
 
-describe("Create storage entry", () => {
-  const storageEntryName = `storage-entry-${Math.random()}`;
+describe("Create config entry", () => {
+  const configEntryName = `config-entry-${Math.random()}`;
   let provider: CardinalProvider;
 
-  it("Init storage entry", async () => {
+  it("Init config entry", async () => {
     provider = await getProvider();
     const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
-    const storageEntryId = findConfigEntryId(storageEntryName);
+    const configEntryId = findConfigEntryId(configEntryName);
     const ix = await program.methods
       .initConfigEntry({
-        key: storageEntryName,
+        key: configEntryName,
         value: "value",
         extends: [],
       })
       .accountsStrict({
-        configEntry: storageEntryId,
+        configEntry: configEntryId,
         authority: provider.wallet.publicKey,
         systemProgram: SystemProgram.programId,
       })
@@ -35,16 +35,16 @@ describe("Create storage entry", () => {
 
     await executeTransaction(provider.connection, transaction, provider.wallet);
 
-    const storageEntryData = await getConfigEntry(
+    const configEntryData = await getConfigEntry(
       provider.connection,
-      storageEntryName
+      configEntryName
     );
 
-    expect(storageEntryData.parsed.key).toEqual(storageEntryName);
-    expect(storageEntryData.parsed.value).toEqual("value");
+    expect(configEntryData.parsed.key).toEqual(configEntryName);
+    expect(configEntryData.parsed.value).toEqual("value");
   });
 
-  it("Update storage entry", async () => {
+  it("Update config entry", async () => {
     const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
@@ -63,12 +63,12 @@ describe("Create storage entry", () => {
 
     await executeTransaction(provider.connection, transaction, provider.wallet);
 
-    const storageEntryData = await getConfigEntry(
+    const configEntryData = await getConfigEntry(
       provider.connection,
-      storageEntryName
+      configEntryName
     );
 
-    expect(storageEntryData.parsed.key).toEqual(storageEntryName);
-    expect(storageEntryData.parsed.value).toEqual("150");
+    expect(configEntryData.parsed.key).toEqual(configEntryName);
+    expect(configEntryData.parsed.value).toEqual("150");
   });
 });

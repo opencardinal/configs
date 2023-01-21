@@ -2,18 +2,18 @@ import type { AccountData } from "@cardinal/common";
 import { fetchIdlAccount } from "@cardinal/common";
 import type { Connection } from "@solana/web3.js";
 
-import type { CONFIGS_PROGRAM, StorageEntryData } from "./constants";
+import type { ConfigEntryData, CONFIGS_PROGRAM } from "./constants";
 import { CONFIGS_IDL } from "./constants";
 import { findConfigEntryId } from "./pda";
 
 export const getConfigEntry = async (
   connection: Connection,
   name: string
-): Promise<AccountData<StorageEntryData>> => {
-  const storageEntryId = findConfigEntryId(name);
+): Promise<AccountData<ConfigEntryData>> => {
+  const configEntryId = findConfigEntryId(name);
   return fetchIdlAccount<"configEntry", CONFIGS_PROGRAM>(
     connection,
-    storageEntryId,
+    configEntryId,
     "configEntry",
     CONFIGS_IDL
   );

@@ -8,7 +8,7 @@ import { PublicKey } from "@solana/web3.js";
 
 import * as CONFIGS_TYPES from "../idl/cardinal_configs";
 
-export const configs_ADDRESS = new PublicKey(
+export const CONFIGS_ADDRESS = new PublicKey(
   "cosTRGbPdRwuyAnWXQ8H7rNXZNXvsQ3nbvzGd9BdvoT"
 );
 
@@ -18,7 +18,7 @@ export type CONFIGS_PROGRAM = CONFIGS_TYPES.CardinalConfigs;
 
 export const CONFIGS_IDL = CONFIGS_TYPES.IDL;
 
-export type StorageEntryData = ParsedIdlAccountData<
+export type ConfigEntryData = ParsedIdlAccountData<
   "configEntry",
   CONFIGS_PROGRAM
 >;
@@ -30,7 +30,7 @@ export const configsProgram = (
 ) => {
   return new Program<CONFIGS_PROGRAM>(
     CONFIGS_IDL,
-    configs_ADDRESS,
+    CONFIGS_ADDRESS,
     new AnchorProvider(
       connection,
       wallet ?? emptyWallet(PublicKey.default),
