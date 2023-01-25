@@ -8,9 +8,9 @@ import { CONFIG_ENTRY_SEED, CONFIGS_ADDRESS } from "./constants";
  * Finds the config entry id.
  * @returns
  */
-export const findConfigEntryId = (name: string): web3.PublicKey => {
+export const findConfigEntryId = (buffer: Buffer): web3.PublicKey => {
   return findProgramAddressSync(
-    [utils.bytes.utf8.encode(CONFIG_ENTRY_SEED), utils.bytes.utf8.encode(name)],
+    [utils.bytes.utf8.encode(CONFIG_ENTRY_SEED), buffer],
     CONFIGS_ADDRESS
   )[0];
 };
