@@ -23,6 +23,7 @@ describe("Create config entry", () => {
       .initConfigEntry({
         key: configEntryName,
         value: "value",
+        configAccount: PublicKey.default,
         extends: [],
       })
       .accountsStrict({
@@ -48,14 +49,15 @@ describe("Create config entry", () => {
     const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
+    const configEntryId = findConfigEntryId(configEntryName);
     const ix = await program.methods
       .updateConfigEntry({
         value: "150",
         extends: [],
       })
       .accountsStrict({
-        configEntry: PublicKey.default,
-        authority: PublicKey.default,
+        configEntry: configEntryId,
+        authority: provider.wallet.publicKey,
         systemProgram: SystemProgram.programId,
       })
       .instruction();

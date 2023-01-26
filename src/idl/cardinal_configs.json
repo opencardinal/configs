@@ -35,7 +35,7 @@
       "accounts": [
         {
           "name": "configEntry",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -78,6 +78,10 @@
             "type": "string"
           },
           {
+            "name": "configAccount",
+            "type": "publicKey"
+          },
+          {
             "name": "extends",
             "type": {
               "vec": "publicKey"
@@ -100,6 +104,10 @@
           {
             "name": "value",
             "type": "string"
+          },
+          {
+            "name": "configAccount",
+            "type": "publicKey"
           },
           {
             "name": "extends",

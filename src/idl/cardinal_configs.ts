@@ -35,7 +35,7 @@ export type CardinalConfigs = {
       "accounts": [
         {
           "name": "configEntry",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -78,6 +78,10 @@ export type CardinalConfigs = {
             "type": "string"
           },
           {
+            "name": "configAccount",
+            "type": "publicKey"
+          },
+          {
             "name": "extends",
             "type": {
               "vec": "publicKey"
@@ -100,6 +104,10 @@ export type CardinalConfigs = {
           {
             "name": "value",
             "type": "string"
+          },
+          {
+            "name": "configAccount",
+            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -195,7 +203,7 @@ export const IDL: CardinalConfigs = {
       "accounts": [
         {
           "name": "configEntry",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -238,6 +246,10 @@ export const IDL: CardinalConfigs = {
             "type": "string"
           },
           {
+            "name": "configAccount",
+            "type": "publicKey"
+          },
+          {
             "name": "extends",
             "type": {
               "vec": "publicKey"
@@ -260,6 +272,10 @@ export const IDL: CardinalConfigs = {
           {
             "name": "value",
             "type": "string"
+          },
+          {
+            "name": "configAccount",
+            "type": "publicKey"
           },
           {
             "name": "extends",

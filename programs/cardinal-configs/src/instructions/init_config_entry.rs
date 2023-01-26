@@ -4,6 +4,7 @@ use {crate::state::*, anchor_lang::prelude::*};
 pub struct InitConfigEntryIx {
     key: String,
     value: String,
+    config_account: Pubkey,
     extends: Vec<Pubkey>,
 }
 
@@ -14,7 +15,7 @@ pub struct InitConfigEntryCtx<'info> {
         init,
         payer = authority,
         space = CONFIG_ENTRY_SIZE,
-        seeds = [CONFIG_ENTRY_SEED_PREFIX.as_bytes(), ix.key.as_bytes()],
+        seeds = [CONFIG_ENTRY_SEED_PREFIX.as_bytes(), ix.key.as_bytes(), ix.config_account.key().as_ref()],
         bump
     )]
     config_entry: Account<'info, ConfigEntry>,
@@ -32,6 +33,7 @@ pub fn handler<'key, 'accounts, 'remaining, 'info>(ctx: Context<'key, 'accounts,
         bump: *ctx.bumps.get("config_entry").unwrap(),
         key: ix.key,
         value: ix.value,
+        config_account: ix.config_account,
         extends: ix.extends,
     };
     let new_space = new_config_entry.try_to_vec()?.len() + 8;

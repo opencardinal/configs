@@ -9,6 +9,7 @@ pub struct UpdateConfigEntryIx {
 #[derive(Accounts)]
 #[instruction(ix: UpdateConfigEntryIx)]
 pub struct UpdateConfigEntryCtx<'info> {
+    #[account(mut)]
     config_entry: Account<'info, ConfigEntry>,
     #[account(mut)]
     authority: Signer<'info>,
@@ -23,6 +24,7 @@ pub fn handler(ctx: Context<UpdateConfigEntryCtx>, ix: UpdateConfigEntryIx) -> R
         bump: config_entry.bump,
         key: config_entry.key.to_string(),
         value: ix.value,
+        config_account: config_entry.config_account,
         extends: ix.extends,
     };
     let new_space = new_config_entry.try_to_vec()?.len() + 8;

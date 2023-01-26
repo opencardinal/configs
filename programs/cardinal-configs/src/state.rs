@@ -12,6 +12,7 @@ pub struct ConfigEntry {
     pub bump: u8,
     pub key: String,
     pub value: String,
+    pub config_account: Pubkey,
     pub extends: Vec<Pubkey>,
 }
 
