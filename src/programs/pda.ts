@@ -1,6 +1,5 @@
-import type { web3 } from "@project-serum/anchor";
 import { utils } from "@project-serum/anchor";
-import { findProgramAddressSync } from "@project-serum/anchor/dist/cjs/utils/pubkey";
+import { PublicKey } from "@solana/web3.js";
 
 import { CONFIG_ENTRY_SEED, CONFIGS_ADDRESS } from "./constants";
 
@@ -8,9 +7,9 @@ import { CONFIG_ENTRY_SEED, CONFIGS_ADDRESS } from "./constants";
  * Finds the config entry id.
  * @returns
  */
-export const findConfigEntryId = (buffer: Buffer): web3.PublicKey => {
-  return findProgramAddressSync(
-    [utils.bytes.utf8.encode(CONFIG_ENTRY_SEED), buffer],
+export const findConfigEntryId = (key: string): PublicKey => {
+  return PublicKey.findProgramAddressSync(
+    [utils.bytes.utf8.encode(CONFIG_ENTRY_SEED), utils.bytes.utf8.encode(key)],
     CONFIGS_ADDRESS
   )[0];
 };
