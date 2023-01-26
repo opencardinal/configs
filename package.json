@@ -1,6 +1,6 @@
 {
   "name": "@cardinal/configs",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "Cardinal configs SDK",
   "keywords": [
     "solana",

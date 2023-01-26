@@ -8,9 +8,9 @@ import { findConfigEntryId } from "./pda";
 
 export const getConfigEntry = async (
   connection: Connection,
-  name: string
+  buffer: Buffer
 ): Promise<AccountData<ConfigEntryData>> => {
-  const configEntryId = findConfigEntryId(name);
+  const configEntryId = findConfigEntryId(buffer);
   return fetchIdlAccount<"configEntry", CONFIGS_PROGRAM>(
     connection,
     configEntryId,

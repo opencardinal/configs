@@ -18,7 +18,7 @@ describe("Create config entry", () => {
     const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
-    const configEntryId = findConfigEntryId(configEntryName);
+    const configEntryId = findConfigEntryId(Buffer.from(configEntryName));
     const ix = await program.methods
       .initConfigEntry({
         key: configEntryName,
@@ -37,7 +37,7 @@ describe("Create config entry", () => {
 
     const configEntryData = await getConfigEntry(
       provider.connection,
-      configEntryName
+      Buffer.from(configEntryName)
     );
 
     expect(configEntryData.parsed.key).toEqual(configEntryName);
@@ -65,7 +65,7 @@ describe("Create config entry", () => {
 
     const configEntryData = await getConfigEntry(
       provider.connection,
-      configEntryName
+      Buffer.from(configEntryName)
     );
 
     expect(configEntryData.parsed.key).toEqual(configEntryName);
