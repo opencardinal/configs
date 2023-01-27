@@ -1,5 +1,5 @@
 import { executeTransaction } from "@cardinal/common";
-import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
+import { SystemProgram, Transaction } from "@solana/web3.js";
 
 import {
   configsProgram,
@@ -21,9 +21,9 @@ describe("Create config entry", () => {
     const configEntryId = findConfigEntryId(configEntryName);
     const ix = await program.methods
       .initConfigEntry({
-        key: configEntryName,
+        prefix: Buffer.from(""),
+        key: Buffer.from(configEntryName),
         value: "value",
-        configAccount: PublicKey.default,
         extends: [],
       })
       .accountsStrict({
