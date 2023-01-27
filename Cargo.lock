@@ -393,6 +393,7 @@ dependencies = [
  "anchor-lang",
  "cardinal-rewards-center",
  "cardinal-stake-pool",
+ "serde_json",
  "solana-program",
 ]
 

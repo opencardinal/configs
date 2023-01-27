@@ -17,14 +17,14 @@ pub struct UpdateConfigEntryCtx<'info> {
 }
 
 pub fn handler(ctx: Context<UpdateConfigEntryCtx>, ix: UpdateConfigEntryIx) -> Result<()> {
-    assert_authority(&ctx.accounts.config_entry.key, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+    assert_authority(&ctx.accounts.config_entry.key, &ix.value, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
     let config_entry = &mut ctx.accounts.config_entry;
 
     let new_config_entry = ConfigEntry {
         bump: config_entry.bump,
-        key: config_entry.key.to_string(),
+        prefix: config_entry.prefix.to_vec(),
+        key: config_entry.key.to_vec(),
         value: ix.value,
-        config_account: config_entry.config_account,
         extends: ix.extends,
     };
     let new_space = new_config_entry.try_to_vec()?.len() + 8;

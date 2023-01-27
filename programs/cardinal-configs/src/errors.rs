@@ -12,4 +12,8 @@ pub enum ErrorCode {
     InvalidRewardCenterPoolAccount,
     #[msg("Invalid pool authority")]
     InvalidPoolAuthority,
+    #[msg("Pool address not found in config")]
+    PoolAddressNotFound,
+    #[msg("Invalid pool address in config")]
+    InvalidConfigPoolAddress,
 }

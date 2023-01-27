@@ -2,9 +2,9 @@ use {crate::state::*, anchor_lang::prelude::*};
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct InitConfigEntryIx {
-    key: String,
+    prefix: Vec<u8>,
+    key: Vec<u8>,
     value: String,
-    config_account: Pubkey,
     extends: Vec<Pubkey>,
 }
 
@@ -15,7 +15,7 @@ pub struct InitConfigEntryCtx<'info> {
         init,
         payer = authority,
         space = CONFIG_ENTRY_SIZE,
-        seeds = [CONFIG_ENTRY_SEED_PREFIX.as_bytes(), ix.key.as_bytes(), ix.config_account.key().as_ref()],
+        seeds = [CONFIG_ENTRY_SEED_PREFIX.as_bytes(), ix.prefix.as_ref(), ix.key.as_ref()],
         bump
     )]
     config_entry: Account<'info, ConfigEntry>,
@@ -26,14 +26,14 @@ pub struct InitConfigEntryCtx<'info> {
 }
 
 pub fn handler<'key, 'accounts, 'remaining, 'info>(ctx: Context<'key, 'accounts, 'remaining, 'info, InitConfigEntryCtx<'info>>, ix: InitConfigEntryIx) -> Result<()> {
-    assert_authority(&ix.key, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+    assert_authority(&ix.key, &ix.value, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
     let config_entry = &mut ctx.accounts.config_entry;
 
     let new_config_entry = ConfigEntry {
         bump: *ctx.bumps.get("config_entry").unwrap(),
+        prefix: ix.prefix,
         key: ix.key,
         value: ix.value,
-        config_account: ix.config_account,
         extends: ix.extends,
     };
     let new_space = new_config_entry.try_to_vec()?.len() + 8;

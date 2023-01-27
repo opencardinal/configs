@@ -70,16 +70,16 @@ export type CardinalConfigs = {
             "type": "u8"
           },
           {
+            "name": "prefix",
+            "type": "bytes"
+          },
+          {
             "name": "key",
-            "type": "string"
+            "type": "bytes"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "configAccount",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -98,16 +98,16 @@ export type CardinalConfigs = {
         "kind": "struct",
         "fields": [
           {
+            "name": "prefix",
+            "type": "bytes"
+          },
+          {
             "name": "key",
-            "type": "string"
+            "type": "bytes"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "configAccount",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -162,6 +162,16 @@ export type CardinalConfigs = {
       "code": 6004,
       "name": "InvalidPoolAuthority",
       "msg": "Invalid pool authority"
+    },
+    {
+      "code": 6005,
+      "name": "PoolAddressNotFound",
+      "msg": "Pool address not found in config"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidConfigPoolAddress",
+      "msg": "Invalid pool address in config"
     }
   ]
 };
@@ -238,16 +248,16 @@ export const IDL: CardinalConfigs = {
             "type": "u8"
           },
           {
+            "name": "prefix",
+            "type": "bytes"
+          },
+          {
             "name": "key",
-            "type": "string"
+            "type": "bytes"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "configAccount",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -266,16 +276,16 @@ export const IDL: CardinalConfigs = {
         "kind": "struct",
         "fields": [
           {
+            "name": "prefix",
+            "type": "bytes"
+          },
+          {
             "name": "key",
-            "type": "string"
+            "type": "bytes"
           },
           {
             "name": "value",
             "type": "string"
-          },
-          {
-            "name": "configAccount",
-            "type": "publicKey"
           },
           {
             "name": "extends",
@@ -330,6 +340,16 @@ export const IDL: CardinalConfigs = {
       "code": 6004,
       "name": "InvalidPoolAuthority",
       "msg": "Invalid pool authority"
+    },
+    {
+      "code": 6005,
+      "name": "PoolAddressNotFound",
+      "msg": "Pool address not found in config"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidConfigPoolAddress",
+      "msg": "Invalid pool address in config"
     }
   ]
 };

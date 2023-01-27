@@ -1,5 +1,6 @@
 use crate::errors::ErrorCode;
 use anchor_lang::prelude::*;
+use serde_json::Value;
 use solana_program::{program::invoke, system_instruction::transfer};
 use std::{cmp::Ordering, slice::Iter, str::FromStr};
 
@@ -10,21 +11,29 @@ pub const CONFIG_ENTRY_SIZE: usize = 8 + std::mem::size_of::<ConfigEntry>() + 16
 #[account]
 pub struct ConfigEntry {
     pub bump: u8,
-    pub key: String,
+    pub prefix: Vec<u8>,
+    pub key: Vec<u8>,
     pub value: String,
-    pub config_account: Pubkey,
     pub extends: Vec<Pubkey>,
 }
 
-pub fn assert_authority<'info>(key: &String, authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
+pub fn assert_authority<'info>(key: &Vec<u8>, value: &String, authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
     if authority == Pubkey::from_str(GLOBAL_AUTHORITY).unwrap() {
         return Ok(());
     }
-    if key.starts_with("s:") {
+    if &key[0..2] == "s:".as_bytes() {
         let stake_pool_account_info_unsafe = next_account_info(remaining_accounts);
         if stake_pool_account_info_unsafe.is_err() {
             return Err(error!(ErrorCode::MissingRemainingAccountsForConfigEntry));
         }
+
+        let deserialized_config: &Value = &serde_json::from_str(value).expect("value should be serializable");
+        let config_stake_pool_address_unsafe = deserialized_config.get("stakePoolAddress");
+        if config_stake_pool_address_unsafe.is_none() {
+            return Err(error!(ErrorCode::InvalidPoolAuthority));
+        }
+        let config_stake_pool_address = config_stake_pool_address_unsafe.unwrap().to_string();
+
         let stake_pool_account_info = stake_pool_account_info_unsafe.unwrap();
         if stake_pool_account_info.owner == &cardinal_stake_pool::id() {
             let stake_pool_unsafe = Account::<cardinal_stake_pool::state::StakePool>::try_from(stake_pool_account_info);
@@ -32,6 +41,9 @@ pub fn assert_authority<'info>(key: &String, authority: Pubkey, remaining_accoun
                 return Err(error!(ErrorCode::InvalidStakePoolAccount));
             }
             let stake_pool = stake_pool_unsafe.unwrap();
+            if stake_pool.key().to_string() != config_stake_pool_address {
+                return Err(error!(ErrorCode::InvalidConfigPoolAddress));
+            }
             if stake_pool.authority != authority.key() {
                 return Err(error!(ErrorCode::InvalidPoolAuthority));
             }
@@ -43,6 +55,9 @@ pub fn assert_authority<'info>(key: &String, authority: Pubkey, remaining_accoun
             let stake_pool = stake_pool_unsafe.unwrap();
             if stake_pool.authority != authority.key() {
                 return Err(error!(ErrorCode::InvalidPoolAuthority));
+            }
+            if stake_pool.key().to_string() != config_stake_pool_address {
+                return Err(error!(ErrorCode::InvalidConfigPoolAddress));
             }
         }
     }
