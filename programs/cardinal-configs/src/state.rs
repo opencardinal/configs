@@ -17,11 +17,11 @@ pub struct ConfigEntry {
     pub extends: Vec<Pubkey>,
 }
 
-pub fn assert_authority<'info>(key: &Vec<u8>, value: &String, authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
+pub fn assert_authority<'info>(prefix: &Vec<u8>, value: &String, authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
     if authority == Pubkey::from_str(GLOBAL_AUTHORITY).unwrap() {
         return Ok(());
     }
-    if &key[0..2] == "s:".as_bytes() {
+    if prefix == "s".as_bytes() {
         let stake_pool_account_info_unsafe = next_account_info(remaining_accounts);
         if stake_pool_account_info_unsafe.is_err() {
             return Err(error!(ErrorCode::MissingRemainingAccountsForConfigEntry));

@@ -4,6 +4,7 @@ use {crate::state::*, anchor_lang::prelude::*};
 pub struct UpdateConfigEntryIx {
     value: String,
     extends: Vec<Pubkey>,
+    append: bool,
 }
 
 #[derive(Accounts)]
@@ -17,14 +18,14 @@ pub struct UpdateConfigEntryCtx<'info> {
 }
 
 pub fn handler(ctx: Context<UpdateConfigEntryCtx>, ix: UpdateConfigEntryIx) -> Result<()> {
-    assert_authority(&ctx.accounts.config_entry.key, &ix.value, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+    assert_authority(&ctx.accounts.config_entry.prefix, &ix.value, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
     let config_entry = &mut ctx.accounts.config_entry;
 
     let new_config_entry = ConfigEntry {
         bump: config_entry.bump,
         prefix: config_entry.prefix.to_vec(),
         key: config_entry.key.to_vec(),
-        value: ix.value,
+        value: if ix.append { config_entry.value.to_string() + &ix.value } else { ix.value },
         extends: ix.extends,
     };
     let new_space = new_config_entry.try_to_vec()?.len() + 8;

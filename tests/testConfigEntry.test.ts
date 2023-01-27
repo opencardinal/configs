@@ -18,7 +18,10 @@ describe("Create config entry", () => {
     const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
-    const configEntryId = findConfigEntryId("", configEntryName);
+    const configEntryId = findConfigEntryId(
+      Buffer.from("", "utf-8"),
+      Buffer.from(configEntryName, "utf-8")
+    );
     const ix = await program.methods
       .initConfigEntry({
         prefix: Buffer.from(""),
@@ -38,8 +41,8 @@ describe("Create config entry", () => {
 
     const configEntryData = await getConfigEntry(
       provider.connection,
-      "",
-      configEntryName
+      Buffer.from("", "utf-8"),
+      Buffer.from(configEntryName, "utf-8")
     );
 
     expect(configEntryData.parsed.key).toEqual(configEntryName);
@@ -50,11 +53,15 @@ describe("Create config entry", () => {
     const program = configsProgram(provider.connection);
 
     const transaction = new Transaction();
-    const configEntryId = findConfigEntryId("", configEntryName);
+    const configEntryId = findConfigEntryId(
+      Buffer.from("", "utf-8"),
+      Buffer.from(configEntryName, "utf-8")
+    );
     const ix = await program.methods
       .updateConfigEntry({
         value: "150",
         extends: [],
+        append: false,
       })
       .accountsStrict({
         configEntry: configEntryId,
@@ -68,8 +75,8 @@ describe("Create config entry", () => {
 
     const configEntryData = await getConfigEntry(
       provider.connection,
-      "",
-      configEntryName
+      Buffer.from("", "utf-8"),
+      Buffer.from(configEntryName, "utf-8")
     );
 
     expect(configEntryData.parsed.key).toEqual(configEntryName);

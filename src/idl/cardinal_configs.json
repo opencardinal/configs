@@ -132,6 +132,10 @@
             "type": {
               "vec": "publicKey"
             }
+          },
+          {
+            "name": "append",
+            "type": "bool"
           }
         ]
       }

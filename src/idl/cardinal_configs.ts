@@ -132,6 +132,10 @@ export type CardinalConfigs = {
             "type": {
               "vec": "publicKey"
             }
+          },
+          {
+            "name": "append",
+            "type": "bool"
           }
         ]
       }
@@ -310,6 +314,10 @@ export const IDL: CardinalConfigs = {
             "type": {
               "vec": "publicKey"
             }
+          },
+          {
+            "name": "append",
+            "type": "bool"
           }
         ]
       }
