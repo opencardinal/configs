@@ -1,6 +1,5 @@
 use crate::errors::ErrorCode;
 use anchor_lang::prelude::*;
-use serde_json::Value;
 use solana_program::{program::invoke, system_instruction::transfer};
 use std::{cmp::Ordering, slice::Iter, str::FromStr};
 
@@ -17,7 +16,7 @@ pub struct ConfigEntry {
     pub extends: Vec<Pubkey>,
 }
 
-pub fn assert_authority<'info>(prefix: &Vec<u8>, value: &String, authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
+pub fn assert_authority<'info>(prefix: &Vec<u8>, old_value: &[u8], new_value: &[u8], authority: Pubkey, remaining_accounts: &mut Iter<AccountInfo<'info>>) -> Result<()> {
     if authority == Pubkey::from_str(GLOBAL_AUTHORITY).unwrap() {
         return Ok(());
     }
@@ -27,23 +26,44 @@ pub fn assert_authority<'info>(prefix: &Vec<u8>, value: &String, authority: Pubk
             return Err(error!(ErrorCode::MissingRemainingAccountsForConfigEntry));
         }
 
-        let deserialized_config: &Value = &serde_json::from_str(value).expect("value should be serializable");
-        let config_stake_pool_address_unsafe = deserialized_config.get("stakePoolAddress");
-        if config_stake_pool_address_unsafe.is_none() {
-            return Err(error!(ErrorCode::InvalidPoolAuthority));
-        }
-        let config_stake_pool_address = config_stake_pool_address_unsafe.unwrap().to_string();
+        // // find new config stake pool address
+        // let new_deserialized_config: &Value = &serde_json::from_str(new_value).expect("value should be serializable");
+        // let new_config_stake_pool_address_unsafe = new_deserialized_config.get("stakePoolAddress");
+        // if new_config_stake_pool_address_unsafe.is_none() {
+        //     return Err(error!(ErrorCode::InvalidPoolAuthority));
+        // }
+        // let new_config_stake_pool_address = new_config_stake_pool_address_unsafe.unwrap();
+
+        // // find old config stake pool address
+        // if old_value.len() > 0 {
+        //     let old_deserialized_config_unsafe = &serde_json::from_str::<Value>(&old_value);
+        //     if old_deserialized_config_unsafe.is_ok() {
+        //         let old_deserialized_config: &Value = &old_deserialized_config_unsafe.unwrap();
+        //         let old_config_stake_pool_address_unsafe = old_deserialized_config.get("stakePoolAddress");
+        //         if old_config_stake_pool_address_unsafe.is_none() {
+        //             return Err(error!(ErrorCode::InvalidPoolAuthority));
+        //         }
+        //         let old_config_stake_pool_address = old_config_stake_pool_address_unsafe.unwrap();
+        //         if new_config_stake_pool_address.eq(old_config_stake_pool_address) {
+        //             return Err(error!(ErrorCode::InvalidConfigPoolAddress));
+        //         }
+        //     }
+        // }
 
         let stake_pool_account_info = stake_pool_account_info_unsafe.unwrap();
+        if old_value.len() > 0 && stake_pool_account_info.key().to_string().as_bytes() != &old_value[21..65] {
+            return Err(error!(ErrorCode::InvalidPoolAuthority));
+        }
+        if old_value.len() == 0 && new_value.len() > 0 && stake_pool_account_info.key().to_string().as_bytes() != &new_value[21..65] {
+            return Err(error!(ErrorCode::InvalidPoolAuthority));
+        }
+
         if stake_pool_account_info.owner == &cardinal_stake_pool::id() {
             let stake_pool_unsafe = Account::<cardinal_stake_pool::state::StakePool>::try_from(stake_pool_account_info);
             if stake_pool_unsafe.is_err() {
                 return Err(error!(ErrorCode::InvalidStakePoolAccount));
             }
             let stake_pool = stake_pool_unsafe.unwrap();
-            if stake_pool.key().to_string() != config_stake_pool_address {
-                return Err(error!(ErrorCode::InvalidConfigPoolAddress));
-            }
             if stake_pool.authority != authority.key() {
                 return Err(error!(ErrorCode::InvalidPoolAuthority));
             }
@@ -55,9 +75,6 @@ pub fn assert_authority<'info>(prefix: &Vec<u8>, value: &String, authority: Pubk
             let stake_pool = stake_pool_unsafe.unwrap();
             if stake_pool.authority != authority.key() {
                 return Err(error!(ErrorCode::InvalidPoolAuthority));
-            }
-            if stake_pool.key().to_string() != config_stake_pool_address {
-                return Err(error!(ErrorCode::InvalidConfigPoolAddress));
             }
         }
     }

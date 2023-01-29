@@ -26,7 +26,13 @@ pub struct InitConfigEntryCtx<'info> {
 }
 
 pub fn handler<'key, 'accounts, 'remaining, 'info>(ctx: Context<'key, 'accounts, 'remaining, 'info, InitConfigEntryCtx<'info>>, ix: InitConfigEntryIx) -> Result<()> {
-    assert_authority(&ix.prefix, &ix.value, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+    assert_authority(
+        &ix.prefix,
+        &String::from("").as_bytes(),
+        &ix.value.as_bytes(),
+        ctx.accounts.authority.key(),
+        &mut ctx.remaining_accounts.iter(),
+    )?;
     let config_entry = &mut ctx.accounts.config_entry;
 
     let new_config_entry = ConfigEntry {

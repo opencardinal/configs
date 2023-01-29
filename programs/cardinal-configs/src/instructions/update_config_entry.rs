@@ -18,7 +18,13 @@ pub struct UpdateConfigEntryCtx<'info> {
 }
 
 pub fn handler(ctx: Context<UpdateConfigEntryCtx>, ix: UpdateConfigEntryIx) -> Result<()> {
-    assert_authority(&ctx.accounts.config_entry.prefix, &ix.value, ctx.accounts.authority.key(), &mut ctx.remaining_accounts.iter())?;
+    assert_authority(
+        &ctx.accounts.config_entry.prefix,
+        &ctx.accounts.config_entry.value.as_bytes(),
+        &ix.value.as_bytes(),
+        ctx.accounts.authority.key(),
+        &mut ctx.remaining_accounts.iter(),
+    )?;
     let config_entry = &mut ctx.accounts.config_entry;
 
     let new_config_entry = ConfigEntry {
