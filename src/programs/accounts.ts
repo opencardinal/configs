@@ -1,20 +1,21 @@
 import type { AccountData } from "@cardinal/common";
+import { fetchIdlAccount } from "@cardinal/common";
 import type { Connection } from "@solana/web3.js";
 
-import type { ConfigEntryData } from "./constants";
-import { configsProgram } from "./constants";
+import type { ConfigEntryData, CONFIGS_PROGRAM } from "./constants";
+import { CONFIGS_IDL } from "./constants";
 import { findConfigEntryId } from "./pda";
 
 export const getConfigEntry = async (
   connection: Connection,
-  key: Buffer,
-  prefix: Buffer
+  prefix: Buffer,
+  key: Buffer
 ): Promise<AccountData<ConfigEntryData>> => {
   const configEntryId = findConfigEntryId(prefix, key);
-  const program = configsProgram(connection);
-  const parsed = await program.account.configEntry.fetch(configEntryId);
-  return {
-    pubkey: configEntryId,
-    parsed,
-  };
+  return fetchIdlAccount<"configEntry", CONFIGS_PROGRAM>(
+    connection,
+    configEntryId,
+    "configEntry",
+    CONFIGS_IDL
+  );
 };
