@@ -26,30 +26,6 @@ pub fn assert_authority<'info>(prefix: &Vec<u8>, old_value: &[u8], new_value: &[
             return Err(error!(ErrorCode::MissingRemainingAccountsForConfigEntry));
         }
 
-        // // find new config stake pool address
-        // let new_deserialized_config: &Value = &serde_json::from_str(new_value).expect("value should be serializable");
-        // let new_config_stake_pool_address_unsafe = new_deserialized_config.get("stakePoolAddress");
-        // if new_config_stake_pool_address_unsafe.is_none() {
-        //     return Err(error!(ErrorCode::InvalidPoolAuthority));
-        // }
-        // let new_config_stake_pool_address = new_config_stake_pool_address_unsafe.unwrap();
-
-        // // find old config stake pool address
-        // if old_value.len() > 0 {
-        //     let old_deserialized_config_unsafe = &serde_json::from_str::<Value>(&old_value);
-        //     if old_deserialized_config_unsafe.is_ok() {
-        //         let old_deserialized_config: &Value = &old_deserialized_config_unsafe.unwrap();
-        //         let old_config_stake_pool_address_unsafe = old_deserialized_config.get("stakePoolAddress");
-        //         if old_config_stake_pool_address_unsafe.is_none() {
-        //             return Err(error!(ErrorCode::InvalidPoolAuthority));
-        //         }
-        //         let old_config_stake_pool_address = old_config_stake_pool_address_unsafe.unwrap();
-        //         if new_config_stake_pool_address.eq(old_config_stake_pool_address) {
-        //             return Err(error!(ErrorCode::InvalidConfigPoolAddress));
-        //         }
-        //     }
-        // }
-
         let stake_pool_account_info = stake_pool_account_info_unsafe.unwrap();
         if old_value.len() > 0 && stake_pool_account_info.key().to_string().as_bytes() != &old_value[21..65] {
             return Err(error!(ErrorCode::InvalidPoolAuthority));
