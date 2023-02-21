@@ -8,6 +8,8 @@
 validator.PID
 tests/out.xml
 
+.env
+
 # Ignore the build directory for Rust/Anchor
 target
 # Anchor verified builds directory
