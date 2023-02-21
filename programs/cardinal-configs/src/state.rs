@@ -27,10 +27,13 @@ pub fn assert_authority<'info>(prefix: &Vec<u8>, old_value: &[u8], new_value: &[
         }
 
         let stake_pool_account_info = stake_pool_account_info_unsafe.unwrap();
-        if old_value.len() > 0 && stake_pool_account_info.key().to_string().as_bytes() != &old_value[21..65] {
+        if old_value.len() > 0 && (stake_pool_account_info.key().to_string().as_bytes() != &old_value[21..65] && stake_pool_account_info.key().to_string().as_bytes() != &old_value[21..64]) {
             return Err(error!(ErrorCode::InvalidPoolAuthority));
         }
-        if old_value.len() == 0 && new_value.len() > 0 && stake_pool_account_info.key().to_string().as_bytes() != &new_value[21..65] {
+        if old_value.len() == 0
+            && new_value.len() > 0
+            && (stake_pool_account_info.key().to_string().as_bytes() != &new_value[21..65] && stake_pool_account_info.key().to_string().as_bytes() != &new_value[21..64])
+        {
             return Err(error!(ErrorCode::InvalidPoolAuthority));
         }
 
