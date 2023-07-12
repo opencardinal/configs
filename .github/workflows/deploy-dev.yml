@@ -33,7 +33,7 @@ jobs:
           anchor_git: ${{ env.ANCHOR_GIT }}
           anchor_version: ${{ env.ANCHOR_VERSION }}
       - name: Solana buffer deploy
-        uses: cardinal-labs/solana-buffer-deploy-action@v0.1.5
+        uses: cardinal-labs/solana-buffer-deploy-action@v0.1.6
         id: buffer-deploy
         with:
           network: https://api.devnet.solana.com
