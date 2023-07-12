@@ -1,7 +1,6 @@
-# Cardinal Configs
+# Configs
 
-[![License](https://img.shields.io/badge/license-AGPL%203.0-blue)](https://github.com/cardinal-labs/cardinal-staking/blob/master/LICENSE)
-[![Release](https://github.com/cardinal-labs/cardinal-staking/actions/workflows/release.yml/badge.svg?branch=v0.0.27)](https://github.com/cardinal-labs/cardinal-staking/actions/workflows/release.yml)
+_This is a fork of the [Cardinal Configs](https://github.com/cardinal-labs/cardinal-configs) repository, with all programs being redeployed on behalf of Manaform._
 
 <p align="center">
     <img src="./doc-assets/banner.png" />
@@ -17,8 +16,8 @@ Cardinal configs is a simple key-value store on-chain with pipelines deployed as
 
 ## Packages
 
-| Package          | Description                               | Version                                                                                                 | Docs                                                                                   |
-| :--------------- | :---------------------------------------- | :------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------- |
+| Package            | Description                               | Version                                                                                                     | Docs                                                                                       |
+| :----------------- | :---------------------------------------- | :---------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
 | `cardinal-configs` | On-chain statistics for cardinal programs | [![Crates.io](https://img.shields.io/crates/v/cardinal-configs)](https://crates.io/crates/cardinal-configs) | [![Docs.rs](https://docs.rs/cardinal-configs/badge.svg)](https://docs.rs/cardinal-configs) |
 
 ## Questions & Support
@@ -27,10 +26,4 @@ If you are developing using Cardinal staking contracts and libraries, feel free 
 
 For issues please, file a GitHub issue.
 
-> https://discord.gg/byq6uNTugq
-
-## License
-
-Cardinal Protocol is licensed under the GNU Affero General Public License v3.0.
-
-In short, this means that any changes to this code must be made open source and available under the AGPL-v3.0 license, even if only used privately.
+> https://discord.gg/QQDSUnQefC
