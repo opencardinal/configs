@@ -42,7 +42,7 @@ jobs:
           program-id: stQo8YUfVZG49VJ3Ewt9mzZBG3KFk9EkrBKJugc2d6J
           buffer-authority: cteamyte8zjZTeexp3qTzvpb24TKRSL3HFad9SzNaNJ
       - name: Squads program upgrade
-        uses: cardinal-labs/squads-program-upgrade@v0.1.4
+        uses: cardinal-labs/squads-program-upgrade@v0.2.4
         id: squads-proposal
         with:
           program-multisig: sd4UxSuDinnX2Ldz2VUryQo7iox2HJxynrpChcmGqLU
