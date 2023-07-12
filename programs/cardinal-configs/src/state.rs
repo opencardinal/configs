@@ -37,16 +37,7 @@ pub fn assert_authority<'info>(prefix: &Vec<u8>, old_value: &[u8], new_value: &[
             return Err(error!(ErrorCode::InvalidPoolAuthority));
         }
 
-        if stake_pool_account_info.owner == &cardinal_stake_pool::id() {
-            let stake_pool_unsafe = Account::<cardinal_stake_pool::state::StakePool>::try_from(stake_pool_account_info);
-            if stake_pool_unsafe.is_err() {
-                return Err(error!(ErrorCode::InvalidStakePoolAccount));
-            }
-            let stake_pool = stake_pool_unsafe.unwrap();
-            if stake_pool.authority != authority.key() {
-                return Err(error!(ErrorCode::InvalidPoolAuthority));
-            }
-        } else if stake_pool_account_info.owner == &cardinal_rewards_center::id() {
+        if stake_pool_account_info.owner == &cardinal_rewards_center::id() {
             let stake_pool_unsafe = Account::<cardinal_rewards_center::StakePool>::try_from(stake_pool_account_info);
             if stake_pool_unsafe.is_err() {
                 return Err(error!(ErrorCode::InvalidStakePoolAccount));

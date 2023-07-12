@@ -11,7 +11,7 @@ build:
 
 start:
 	solana-test-validator --url https://api.devnet.solana.com \
-		--bpf-program cnf9Q2MmjDVbzX1kjr8tEEtPJyB4e1avEuBMzWygnWo ./target/deploy/cardinal_configs.so \
+		--bpf-program HMRumirvdnB9Xow4RT2VDuK4KVcjckQG2KWEBi6LDunu ./target/deploy/cardinal_configs.so \
 		--reset --quiet & echo $$!
 	sleep 10
 

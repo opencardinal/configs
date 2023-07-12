@@ -21,7 +21,8 @@ default = []
 
 [dependencies]
 solana-program = "1.10.41"
-anchor-lang = { version = "0.25.0" }
-cardinal-rewards-center = { version = "^2.3.0", features = ["no-entrypoint"] }
-cardinal-stake-pool = { version = "^1.17.0", features = ["no-entrypoint"] }
+anchor-lang = { version = "0.26.0", features = ["init-if-needed"] }
+cardinal-rewards-center = { version = "^3.7.0", features = [
+    "no-entrypoint",
+], path = "../../../cardinal-rewards-center/programs/cardinal-rewards-center" }
 serde_json = "1.0.91"
