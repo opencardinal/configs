@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to devnet buffer
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/install-linux-build-deps
       - uses: actions-rs/toolchain@v1
         with:
